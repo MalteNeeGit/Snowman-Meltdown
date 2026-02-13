@@ -1,6 +1,7 @@
+import random
 import ascii_art
 import snowman
-import random
+
 
 #ANSI COLORS:
 GREEN = "\033[0;32m"
@@ -14,6 +15,7 @@ def get_random_word():
 
 
 def display_game_state(mistakes, secret_word, guessed_letters):
+    """Displays the snowman and builds a display version of the secret word"""
     #Display the snowman for the current number of mistakes.
     print("\n" + "❄️" * 15)
     print(ascii_art.STAGES[mistakes])
@@ -29,6 +31,7 @@ def display_game_state(mistakes, secret_word, guessed_letters):
     print("❄️" * 15 + "\n")
 
 def input_validation(guessed_letters):
+    """Validates the user input and returns it if its ok"""
     while True:
         user_input = input(f"{CYAN}Guess a letter: {END}").lower().strip()
 
@@ -44,6 +47,7 @@ def input_validation(guessed_letters):
 
 
 def play_game():
+    """The game logic which runs a whole round of the game"""
     secret_word = get_random_word()
     guessed_letters = []
     mistakes = 0
@@ -61,7 +65,7 @@ def play_game():
         if guess in secret_word:
             guessed_letters.append(guess)
         else:
-            print(f"{guess} {LIGHT_RED}is not in the word we are looking for{END}")
+            print(f"{guess} {LIGHT_RED}is not part of the word we are looking for{END}")
             mistakes += 1
 
         for char in secret_word:
@@ -81,9 +85,12 @@ def play_game():
         print(f"{LIGHT_RED}Game Over! The Snowman melted :-({END}")
         print(f"{LIGHT_RED}The word was:{END} {secret_word}")
 
+
 def ask_to_play_again():
+    """Lets the user choose if he wants to play the game againn or not"""
     while True:
-        choice = input(f"\n{CYAN}Would you like to play again?{END} {GREEN}(y/n): {END}").lower().strip()
+        choice = input(f"\n{CYAN}Would you like to play again?{END}"
+                       f" {GREEN}(y/n): {END}").lower().strip()
         if choice == 'y':
             return True
         elif choice == 'n':
@@ -93,6 +100,7 @@ def ask_to_play_again():
 
 
 def main():
+    """Starts the gameloop and finishes when the user does not want to play anymore"""
     while True:
         # Start first round:
         play_game()
